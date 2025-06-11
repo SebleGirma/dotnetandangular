@@ -1,0 +1,54 @@
+pipeline {
+  agent any
+
+  environment {
+    DOTNET_ROOT = '/usr/share/dotnet'
+    NODE_ENV = 'production'
+  }
+
+  tools {
+    nodejs 'node-20'       // Define in Jenkins > Global Tools
+    dotnet 'dotnet-8.0'    // Define in Jenkins > Global Tools
+  }
+
+  stages {
+
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: 'git@your-repo-url.git'
+      }
+    }
+
+    stage('Build Angular Frontend') {
+      workingDir 'frontend'
+      steps {
+        sh 'npm install'
+        sh 'npm run build -- --configuration production'
+      }
+    }
+
+    stage('Build .NET Backend') {
+      workingDir 'backend'
+      steps {
+        sh 'dotnet restore'
+        sh 'dotnet publish -c Release -o publish'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        // Replace with your deployment logic
+        sh '''
+        echo "Deploying Angular to /var/www/angular-app"
+        sudo rm -rf /var/www/angular-app/*
+        sudo cp -r frontend/dist/* /var/www/angular-app/
+
+        echo "Deploying .NET to /var/www/dotnet-api"
+        sudo systemctl stop dotnet-api
+        sudo cp -r backend/publish/* /var/www/dotnet-api/
+        sudo systemctl start dotnet-api
+        '''
+      }
+    }
+  }
+}
