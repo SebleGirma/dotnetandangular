@@ -13,17 +13,32 @@ pipeline {
         git branch: 'main', url: 'https://github.com/SebleGirma/dotnetandangular.git'
       }
     }
-
- 
-
-    stage('Build .NET Backend') {
-      steps {
-        dir('backend') {
-          sh 'dotnet restore'
-          sh 'dotnet publish -c Release -o publish'
+stages {
+        stage('Restore .NET dependencies') {
+            steps {
+                dir('backend') {
+                    sh 'dotnet restore'
+                }
+            }
         }
-      }
-    }
+
+        stage('Build .NET backend') {
+            steps {
+                dir('backend') {
+                    sh 'dotnet build --configuration Release'
+                }
+            }
+        }
+
+        // Optional: stage to run or publish
+        stage('Publish .NET backend') {
+            steps {
+                dir('backend') {
+                    sh 'dotnet publish --configuration Release -o publish'
+                }
+            }
+        }
+ 
    stage('Build Angular Frontend') {
       steps {
         dir('frontend') {
