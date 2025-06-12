@@ -39,7 +39,14 @@ pipeline {
                 }
             }
         }
-
+    stage('Build Angular') {
+      steps {
+        dir('frontend') {
+          sh 'npm install --include=dev'
+          sh 'ng build --configuration production'
+        }
+      }
+    }
     stage('Deploy') {
       steps {
         sh '''
@@ -47,9 +54,20 @@ pipeline {
         sudo systemctl stop sebdotnet-api || true
         sudo cp -r backend/src/publish/* /var/www/Sebdotnet-api/
         sudo systemctl start sebdotnet-api
+
+         echo "Deploying Angular to /var/www/Sebangularapp"
+        sudo rm -rf /var/www/Sebangularapp/*
+        sudo cp -r frontend/dist/Sebangularapp/* /var/www/Sebangularapp/
         '''
       }
+      
     }
   }
 }
  
+
+
+
+
+
+   
