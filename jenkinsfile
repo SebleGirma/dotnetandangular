@@ -43,10 +43,10 @@ pipeline {
     stage('Deploy') {
       steps {
         sh '''
-        echo "Deploying .NET to /var/www/Sebdotnet-api"
+        echo "Deploying .NET to /var/www/sebdotnet-api"
         sudo systemctl stop Sebdotnet-api || true
-        sudo cp -r backend/src/publish/* /var/www/Sebdotnet-api/
-        sudo systemctl start Sebdotnet-api
+        sudo cp -r backend/src/publish/* /var/www/sebdotnet-api/
+        sudo systemctl start sebdotnet-api
         '''
       }
     }
