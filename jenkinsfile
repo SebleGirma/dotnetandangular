@@ -57,6 +57,7 @@ pipeline {
 
          echo "Deploying Angular to /var/www/Sebangularapp"
         sudo rm -rf /var/www/Sebangularapp/*
+        sudo mkdir -p /var/www/Sebangularapp
         sudo cp -r frontend/dist/contact-portal/* /var/www/Sebangularapp/
         '''
       }
