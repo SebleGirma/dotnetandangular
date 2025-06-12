@@ -6,11 +6,6 @@ pipeline {
     NODE_ENV = 'production'
   }
 
-  tools {
-    nodejs 'node-20'
-    dotnet 'dotnet-8.0'
-  }
-
   stages {
 
     stage('Checkout') {
