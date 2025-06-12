@@ -42,7 +42,7 @@ pipeline {
     stage('Build Angular') {
       steps {
         dir('frontend') {
-          sh 'npm install --include=dev'
+          sh 'npm install --include=dev --legacy-peer-deps'
           sh 'ng build --configuration production'
         }
       }
@@ -65,6 +65,7 @@ pipeline {
   }
 }
  
+
 
 
 
