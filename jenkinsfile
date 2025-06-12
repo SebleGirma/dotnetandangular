@@ -6,6 +6,8 @@ pipeline {
     NODE_ENV = 'production'
   }
 
+
+
   stages {
 
     stage('Checkout') {
@@ -13,8 +15,8 @@ pipeline {
         git branch: 'main', url: 'https://github.com/SebleGirma/dotnetandangular.git'
       }
     }
-stages {
-        stage('Restore .NET dependencies') {
+
+     stage('Restore .NET') {
             steps {
                 dir('backend') {
                     sh 'dotnet restore'
@@ -22,7 +24,7 @@ stages {
             }
         }
 
-        stage('Build .NET backend') {
+        stage('Build .NET') {
             steps {
                 dir('backend') {
                     sh 'dotnet build --configuration Release'
@@ -30,25 +32,32 @@ stages {
             }
         }
 
-        // Optional: stage to run or publish
-        stage('Publish .NET backend') {
+        stage('Publish .NET') {
             steps {
                 dir('backend') {
                     sh 'dotnet publish --configuration Release -o publish'
                 }
             }
         }
- 
-   stage('Build Angular Frontend') {
+
+    stage('Build Angular Frontend') {
       steps {
         dir('frontend') {
           sh 'npm install'
-          sh 'npm ci '
-          sh 'npm ls @angular-devkit/build-angular'
           sh 'npm run build -- --configuration production'
         }
       }
     }
+
+    stage('Build .NET Backend') {
+      steps {
+        dir('backend') {
+          sh 'dotnet restore'
+          sh 'dotnet publish -c Release -o publish'
+        }
+      }
+    }
+
     stage('Deploy') {
       steps {
         sh '''
