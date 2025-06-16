@@ -34,7 +34,7 @@ export default [
       {
         path: 'operations',
         component: OperationsComponent,
-       // canActivate: [PermissionGuard('Operations', 'Read')]
+        canActivate: [PermissionGuard('Operations', 'Read')]
       },
       {
         path: 'roles',
