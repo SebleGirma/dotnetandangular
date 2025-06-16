@@ -19,37 +19,37 @@ export default [
       {
         path: 'users',
         component: UsersComponent,
-        canActivate: [PermissionGuard('Users', 'Read')]
+       // canActivate: [PermissionGuard('Users', 'Read')]
       },
       {
         path: 'activity-logs',
         component: ActivityLogComponent,
-        canActivate: [PermissionGuard('ActivityLog', 'Read')]
+       // canActivate: [PermissionGuard('ActivityLog', 'Read')]
       },
       {
         path: 'pages',
         component: PagesComponent,
-        canActivate: [PermissionGuard('Pages', 'Read')]
+        ////canActivate: [PermissionGuard('Pages', 'Read')]
       },
       {
         path: 'operations',
         component: OperationsComponent,
-        canActivate: [PermissionGuard('Operations', 'Read')]
+       // canActivate: [PermissionGuard('Operations', 'Read')]
       },
       {
         path: 'roles',
         component: RolesComponent,
-        canActivate: [PermissionGuard('Roles', 'Read')]
+      //  canActivate: [PermissionGuard('Roles', 'Read')]
       },
       {
         path: 'user-roles',
         component: UserRolesComponent,
-        canActivate: [PermissionGuard('UserRoles', 'Read')]
+       // canActivate: [PermissionGuard('UserRoles', 'Read')]
       },
       {
         path: 'role-permission-mapping',
         component: RolePermissionMappingComponent,
-        canActivate: [PermissionGuard('RolePermissionMapping', 'Read')]
+        //canActivate: [PermissionGuard('RolePermissionMapping', 'Read')]
       },
       {
         path: '',
