@@ -25,8 +25,6 @@ public class UsersController(IUserService userService, IActivityLogService activ
     }
 
     [HttpPost("create")]
-    [ActivityLog("Creating new User")]
-    [AuthorizePermission("Users.Create")]
     public async Task<IActionResult> Create(CreateUser createUser)
     {
         var users = await userService.CheckUniqueUsers(createUser.Email, createUser.Email);
@@ -40,8 +38,6 @@ public class UsersController(IUserService userService, IActivityLogService activ
     }
 
     [HttpGet]
-    [Authorize]
-    [ActivityLog("Fetching current user details")]
     public async Task<IActionResult> GetCurrentUser()
     {
         var userIdClaim = User.FindFirst("Id")?.Value;
@@ -54,9 +50,6 @@ public class UsersController(IUserService userService, IActivityLogService activ
     }
 
     [HttpGet("all")]
-    [AuthorizePermission("Users.Read")]
-    [Authorize]
-    [ActivityLog("Fetching all users")]
     public async Task<IActionResult> GetAll() => 
         Ok(await userService.FindAll());
 
@@ -93,14 +86,11 @@ public class UsersController(IUserService userService, IActivityLogService activ
         Ok(await userService.ResetPassword(resetPassword));
 
     [HttpPut("change-password")]
-    [Authorize]
     [ActivityLog("Changing user password")]
     public async Task<IActionResult> ChangePassword(ChangePassword changePassword) => 
         Ok(await userService.ChangePassword(changePassword));
 
     [HttpGet("activity-logs")]
-    [Authorize]
-    [AuthorizePermission("ActivityLog.Read")]
     [ActivityLog("Retrieving activity logs")]
     public async Task<IActionResult> GetActivityLogs([FromQuery] string username = "", [FromQuery] string email = "")
     {
